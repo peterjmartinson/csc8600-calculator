@@ -10,8 +10,18 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_test()
     {
-      double a = 1.0;
       Assert.Fail();
+    }
+
+    [TestMethod]
+    public void Test_Factory_Addition()
+    {
+      Logic.BinaryOperationFactory factory = new Logic.BinaryOperationFactory();
+      Logic_Interfaces.IBinaryOperation add = factory.Get_operation("+");
+      double lhs = 1.0;
+      double rhs = 2.0;
+      double result = add.Perform_binary_calculation(lhs, rhs);
+      Assert.AreEqual(3.0, result);
     }
 
     [TestMethod]
