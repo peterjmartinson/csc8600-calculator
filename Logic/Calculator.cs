@@ -55,18 +55,62 @@ namespace Logic
     }
   }
 
-  public class Addition : Logic_Interfaces.IBinaryOperation
+  public class Addition : IBinaryOperation
   {
     public double Perform_binary_calculation(double lhs, double rhs)
     {
       return lhs + rhs;
     }
   }
-  public class Subtraction : Logic_Interfaces.IBinaryOperation
+
+  public class Subtraction : IBinaryOperation
   {
     public double Perform_binary_calculation(double lhs, double rhs)
     {
       return lhs - rhs;
     }
   }
+
+  public class Multiplication : IBinaryOperation
+  {
+    public double Perform_binary_calculation(double lhs, double rhs)
+    {
+      return lhs * rhs;
+    }
+  }
+
+  public class Division : IBinaryOperation
+  {
+    public double Perform_binary_calculation(double lhs, double rhs)
+    {
+      return lhs / rhs;
+    }
+  }
+
+  // Utility to set the correct operator
+  public interface IBinaryOperationFactory
+  {
+    IBinaryOperation Get_operation(string current_operator);
+  }
+
+  public class BinaryOperationFactory : IBinaryOperationFactory
+  {
+    public IBinaryOperation Get_operation(string current_operator)
+    {
+      switch(current_operator)
+      {
+        case "+":
+          return new Addition();
+        case "-":
+          return new Subtraction();
+        case "*":
+          return new Multiplication();
+        case "/":
+          return new Division();
+        default:
+          return new Addition();
+      }
+    }
+  }
+
 }
