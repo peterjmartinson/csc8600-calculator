@@ -10,54 +10,171 @@ namespace Logic
   public class Calculator
   {
     private IBinaryOperation pending_operation = null;
+    private IUnaryOperation unary_operation = null;
+    private string bad_entry = "Illegal entry.  Must be a number or [+|-|*|/|reciprocal|square_root|plus_minus]";
+    private Digit Lhs = new Digit();
+    private Digit Rhs = new Digit();
 
-    public void Equals()
+    /**
+     * equals_flag & ClearAllButLhs()
+     * Say user enters "1+3=====".
+     * Calculator state will be:
+     *   Lhs.Value = 16
+     *   pending_operator = +
+     *   Rhs.Value = 3
+     * If user now enters "square_root", RunUnaryOperator will run sqrt(3).
+     * equals_flag says whether "=" has been hit, and if so, RunUnaryOperator
+     * will ClearAllButLhs(), and then run the calculation.
+     * -> equals_flag sucks, and the issue should be resolved some other way.
+    */
+    private bool equals_flag = false;
+
+    public void ClearAllButLhs()
     {
-      double lhs = 0.0; // THIS IS A FAKE LINE, REPLACE IT WITH CORRECT LOGIC
-      double rhs = 0.0; // THIS IS A FAKE LINE, REPLACE IT WITH CORRECT LOGIC
-      if (pending_operation != null)
-        pending_operation.Perform_binary_calculation(lhs, rhs);
+      Rhs.Reset();
+      pending_operation = null;
+      equals_flag = false;
     }
 
-    public string Number_entered(double value)
+    public string NumberEntered(double value)
     {
-      throw new NotImplementedException();
+      if (equals_flag)
+      {
+        Clear();
+      }
+
+      if (pending_operation == null)
+      {
+        Lhs.Value = value;
+      }
+      else
+      {
+        Rhs.Value = value;
+      }
+      return value.ToString();
     }
 
-    public string Addition_entered()
+    public string OperationEntered(string operation)
     {
-      throw new NotImplementedException();
+      operation = operation.ToLower();
+      if (operation == "+" || operation == "-" || operation == "*" || operation == "/")
+      {
+        return RunBinaryOperation(operation);
+      }
+      else if (operation == "reciprocal" || operation == "square_root" || operation == "plus_minus")
+      {
+        return RunUnaryOperation(operation);
+      }
+      else if (operation == "=")
+      {
+        return Equals().ToString();
+      }
+      else if (operation == "clear")
+      {
+        return Clear();
+      }
+      else
+      {
+        return bad_entry;
+      }
     }
 
-    public string Subtraction_entered()
+    public double Equals()
     {
-      throw new NotImplementedException();
+      if (pending_operation == null)
+      {
+        return Lhs.Value;
+      }
+      double lhs = Lhs.Value;
+      double rhs = Rhs.IsSet() ? Rhs.Value : Lhs.Value;
+      Lhs.Value = pending_operation.PerformBinaryCalculation(lhs, rhs);
+      equals_flag = true;
+      return Lhs.Value;
     }
 
-    public string Multiplication_entered()
+    public string RunBinaryOperation(string operation)
     {
-      throw new NotImplementedException();
+      Binary_operation_factory factory = new Binary_operation_factory();
+      pending_operation = factory.GetOperation(operation);
+      return operation;
     }
 
-    public string Division_entered()
+    public string RunUnaryOperation(string operation)
     {
-      throw new NotImplementedException();
+      Unary_operation_factory factory = new Unary_operation_factory();
+      unary_operation = factory.GetOperation(operation);
+      if (equals_flag)
+      {
+        ClearAllButLhs();
+      }
+
+      if (Lhs.IsNotSet())
+      {
+        Lhs.Value = 0;
+        Lhs.Value = unary_operation.PerformUnaryCalculation(Lhs.Value);
+        return Lhs.Value.ToString();
+      }
+      else if (pending_operation == null)
+      {
+        Lhs.Value = unary_operation.PerformUnaryCalculation(Lhs.Value);
+        return Lhs.Value.ToString();
+      }
+      else if (Rhs.IsNotSet())
+      {
+        Rhs.Value = unary_operation.PerformUnaryCalculation(Lhs.Value);
+        return Rhs.Value.ToString();
+      }
+      else // if (Rhs.IsSet())
+      {
+        Rhs.Value = unary_operation.PerformUnaryCalculation(Rhs.Value);
+        return Rhs.Value.ToString();
+      }
     }
 
-    public string Reciprocal_entered()
+    public string Clear()
     {
-      throw new NotImplementedException();
+      Lhs.Reset();
+      Rhs.Reset();
+      pending_operation = null;
+      equals_flag = false;
+      return "Clear";
     }
 
-    public string Square_root_entered()
+  }
+
+  public class Digit
+  {
+    public double Value { get; set; }
+
+    public void Reset()
     {
-      throw new NotImplementedException();
+      Value = Double.NaN;
+    }
+
+    public bool IsSet()
+    {
+      return !Double.IsNaN(Value);
+    }
+
+    public bool IsNotSet()
+    {
+      return Double.IsNaN(Value);
+    }
+
+    public Digit()
+    { 
+      Reset();
+    }
+
+    public Digit(double val)
+    {
+      Value = val;
     }
   }
 
   public class Addition : IBinaryOperation
   {
-    public double Perform_binary_calculation(double lhs, double rhs)
+    public double PerformBinaryCalculation(double lhs, double rhs)
     {
       return lhs + rhs;
     }
@@ -65,7 +182,7 @@ namespace Logic
 
   public class Subtraction : IBinaryOperation
   {
-    public double Perform_binary_calculation(double lhs, double rhs)
+    public double PerformBinaryCalculation(double lhs, double rhs)
     {
       return lhs - rhs;
     }
@@ -73,7 +190,7 @@ namespace Logic
 
   public class Multiplication : IBinaryOperation
   {
-    public double Perform_binary_calculation(double lhs, double rhs)
+    public double PerformBinaryCalculation(double lhs, double rhs)
     {
       return lhs * rhs;
     }
@@ -81,21 +198,44 @@ namespace Logic
 
   public class Division : IBinaryOperation
   {
-    public double Perform_binary_calculation(double lhs, double rhs)
+    public double PerformBinaryCalculation(double lhs, double rhs)
     {
       return lhs / rhs;
     }
   }
 
-  // Utility to set the correct operator
-  public interface IBinaryOperationFactory
+  public class Reciprocal : IUnaryOperation
   {
-    IBinaryOperation Get_operation(string current_operator);
+    public double PerformUnaryCalculation(double value)
+    {
+      return 1 / value;
+    }
   }
 
-  public class BinaryOperationFactory : IBinaryOperationFactory
+  public class Square_root : IUnaryOperation
   {
-    public IBinaryOperation Get_operation(string current_operator)
+    public double PerformUnaryCalculation(double value)
+    {
+      return Math.Sqrt(value);
+    }
+  }
+
+  public class Plus_minus : IUnaryOperation
+  {
+    public double PerformUnaryCalculation(double value)
+    {
+      return -1 * value;
+    }
+  }
+
+  public interface IBinaryOperationFactory
+  {
+    IBinaryOperation GetOperation(string current_operator);
+  }
+
+  public class Binary_operation_factory : IBinaryOperationFactory
+  {
+    public IBinaryOperation GetOperation(string current_operator)
     {
       switch(current_operator)
       {
@@ -108,7 +248,30 @@ namespace Logic
         case "/":
           return new Division();
         default:
-          return new Addition();
+          return null;
+      }
+    }
+  }
+
+  public interface IUnaryOperationFactory
+  {
+    IUnaryOperation GetOperation(string current_operator);
+  }
+
+  public class Unary_operation_factory : IUnaryOperationFactory
+  {
+    public IUnaryOperation GetOperation(string current_operator)
+    {
+      switch(current_operator)
+      {
+        case "reciprocal":
+          return new Reciprocal();
+        case "square_root":
+          return new Square_root();
+        case "plus_minus":
+          return new Plus_minus();
+        default:
+          return null;
       }
     }
   }

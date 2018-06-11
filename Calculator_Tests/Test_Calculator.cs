@@ -8,148 +8,402 @@ namespace Calculator_Tests
   {
     
     [TestMethod]
-    public void Test_test()
+    public void Canary()
     {
-      Assert.Fail();
+      Assert.IsTrue(true);
     }
 
     [TestMethod]
-    public void Test_Factory_Addition()
+    public void Test_Unary_operation_factory_Default()
     {
-      Logic.BinaryOperationFactory factory = new Logic.BinaryOperationFactory();
-      Logic_Interfaces.IBinaryOperation add = factory.Get_operation("+");
-      double lhs = 1.0;
-      double rhs = 2.0;
-      double result = add.Perform_binary_calculation(lhs, rhs);
-      Assert.AreEqual(3.0, result);
+      Logic.Unary_operation_factory factory = new Logic.Unary_operation_factory();
+      Logic_Interfaces.IUnaryOperation pending_operation = factory.GetOperation("whatever");
+      Assert.AreEqual(null, pending_operation);
+    }
+
+    [TestMethod]
+    public void Test_Binary_operation_factory_Default()
+    {
+      Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
+      Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("whatever");
+      Assert.AreEqual(null, pending_operation);
+    }
+
+    [TestMethod]
+    public void Test_Digit_Constructor()
+    {
+      Logic.Digit lhs = new Logic.Digit();
+      Assert.IsTrue(Double.IsNaN(lhs.Value));
+    }
+
+    [TestMethod]
+    public void Test_Digit_Constructor_Param()
+    {
+      Logic.Digit lhs = new Logic.Digit(4.1);
+      Assert.AreEqual(4.1, lhs.Value);
+    }
+
+    [TestMethod]
+    public void Test_Digit_Reset()
+    {
+      Logic.Digit lhs = new Logic.Digit();
+      lhs.Value = 4.1;
+      lhs.Reset();
+      Assert.IsTrue(Double.IsNaN(lhs.Value));
+    }
+
+    [TestMethod]
+    public void Test_Digit_IsNotSet()
+    {
+      Logic.Digit lhs = new Logic.Digit();
+      Assert.IsTrue(lhs.IsNotSet());
+    }
+
+    [TestMethod]
+    public void Test_Digit_IsSet()
+    {
+      Logic.Digit lhs = new Logic.Digit(1.0);
+      Assert.IsTrue(lhs.IsSet());
+    }
+
+
+
+
+
+    [TestMethod]
+    public void Test_Equals()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(3);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(5);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("8", result);
+    }
+
+    [TestMethod]
+    public void Test_Equals_No_Operator()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(3);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("3", result);
+    }
+
+    [TestMethod]
+    public void Test_Equals_No_Rhs()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(3);
+      calculator.OperationEntered("+");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("6", result);
+    }
+
+    [TestMethod]
+    public void Test_Repeat_Equals()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.0);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("=");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("9", result);
+    }
+
+
+
+
+    [TestMethod]
+    public void Test_OperationEntered_binary()
+    {
+      string operation = "+";
+      Logic.Calculator calculator = new Logic.Calculator();
+      string result = calculator.OperationEntered(operation);
+      Assert.AreEqual("+", result);
     }
 
     [TestMethod]
     public void Test_Addition()
     {
-      double lhs = 3.1;
-      double rhs = 2.9;
-      Logic_Interfaces.IBinaryOperation addition = new Logic.Addition();
-      double result = addition.Perform_binary_calculation(lhs, rhs);
-      Assert.AreEqual(6.0, result);
-    }
-
-    [TestMethod]
-    public void Test_Multiplication()
-    {
-        double lhs = 3.0;
-        double rhs = 5.0;
-        Logic_Interfaces.IBinaryOperation multiply = new Logic.Multiplication();
-        double result = multiply.Perform_binary_calculation(lhs, rhs);
-        Assert.AreEqual(15.0, result);
+      Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
+      Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("+");
+      double lhs = 1.0;
+      double rhs = 2.0;
+      double result = pending_operation.PerformBinaryCalculation(lhs, rhs);
+      Assert.AreEqual(3.0, result);
     }
 
     [TestMethod]
     public void Test_Subtraction()
     {
-        double lhs = 7.0;
-        double rhs = 22.0;
-        Logic_Interfaces.IBinaryOperation subtract = new Logic.Subtraction();
-        double result = subtract.Perform_binary_calculation(lhs, rhs);
-        Assert.AreEqual(-15.0, result);
+      Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
+      Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("-");
+      double lhs = 3.0;
+      double rhs = 2.0;
+      double result = pending_operation.PerformBinaryCalculation(lhs, rhs);
+      Assert.AreEqual(1.0, result);
+    }
+
+    [TestMethod]
+    public void Test_Multiplication()
+    {
+      Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
+      Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("*");
+      double lhs = 2.0;
+      double rhs = 3.0;
+      double result = pending_operation.PerformBinaryCalculation(lhs, rhs);
+      Assert.AreEqual(6.0, result);
     }
 
     [TestMethod]
     public void Test_Division()
     {
-        double lhs = 56.0;
-        double rhs = 7.0;
-        Logic_Interfaces.IBinaryOperation divide = new Logic.Division();
-        double result = divide.Perform_binary_calculation(lhs, rhs);
-        Assert.AreEqual(8.0, result);
+      Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
+      Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("/");
+      double lhs = 6.0;
+      double rhs = 2.0;
+      double result = pending_operation.PerformBinaryCalculation(lhs, rhs);
+      Assert.AreEqual(3.0, result);
     }
 
     [TestMethod]
-    public void Test_Addition_Decimals()
+    public void Test_Calculator_Addition()
     {
-        double lhs = .12;
-        double rhs = 1.0;
-        Logic_Interfaces.IBinaryOperation add = new Logic.Addition();
-        double result = add.Perform_binary_calculation(lhs, rhs);
-        Assert.AreEqual(1.12, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.1);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(2.1);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("3.2", result);
     }
 
     [TestMethod]
-    public void Test_Subtraction_Decimals()
+    public void Test_Calculator_Subtraction()
     {
-        double lhs = 1.1;
-        double rhs = 0.1;
-        Logic_Interfaces.IBinaryOperation subtract = new Logic.Subtraction();
-        double result = subtract.Perform_binary_calculation(lhs, rhs);
-        Assert.AreEqual(1.0, result);
-    }
-
-    // Triple operations
-
-    [TestMethod]
-    public void Test_Add_Multiply()
-    {
-        double a = 1.0;
-        double b = 2.0;
-        Logic_Interfaces.IBinaryOperation add = new Logic.Addition();
-        double intermediate_result = add.Perform_binary_calculation(a, b);
-        double c = 3.0;
-        Logic_Interfaces.IBinaryOperation multiply = new Logic.Multiplication();
-        double result = multiply.Perform_binary_calculation(intermediate_result, c);
-        Assert.AreEqual(7.0, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(3.3);
+      calculator.OperationEntered("-");
+      calculator.NumberEntered(2.2);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("1.1", result);
     }
 
     [TestMethod]
-    public void Test_Add_Divide()
+    public void Test_Calculator_Multiplication()
     {
-        double a = 7;
-        double b = 15;
-        Logic_Interfaces.IBinaryOperation add = new Logic.Addition();
-        double intermediate_result = add.Perform_binary_calculation(a, b);
-        double c = 3;
-        Logic_Interfaces.IBinaryOperation divide = new Logic.Division();
-        double result = divide.Perform_binary_calculation(intermediate_result, c);
-        Assert.AreEqual(12, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(2.51);
+      calculator.OperationEntered("*");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("10.04", result);
     }
 
     [TestMethod]
-    public void Test_Subtract_Multiply()
+    public void Test_Calculator_Division()
     {
-        double a = 1;
-        double b = 2;
-        Logic_Interfaces.IBinaryOperation minus = new Logic.Subtraction();
-        double intermediate_result = minus.Perform_binary_calculation(a, b);
-        double c = 3;
-        Logic_Interfaces.IBinaryOperation multiply = new Logic.Multiplication();
-        double result = multiply.Perform_binary_calculation(intermediate_result, c);
-        Assert.AreEqual(-5, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(10.04);
+      calculator.OperationEntered("/");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("2.51", result);
     }
 
     [TestMethod]
-    public void Test_Subtract_Divide()
+    public void Test_Calculator_Change_Operator()
     {
-        double a = 7;
-        double b = 15;
-        Logic_Interfaces.IBinaryOperation minus = new Logic.Subtraction();
-        double intermediate_result = minus.Perform_binary_calculation(a, b);
-        double c = 3;
-        Logic_Interfaces.IBinaryOperation divide = new Logic.Division();
-        double result = divide.Perform_binary_calculation(intermediate_result, c);
-        Assert.AreEqual(2, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(10.04);
+      calculator.OperationEntered("/");
+      calculator.OperationEntered("*");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("40.16", result);
+    }
+
+
+
+
+    [TestMethod]
+    public void Test_OperationEntered_unary()
+    {
+      string operation = "reciprocal";
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4);
+      string result = calculator.OperationEntered(operation);
+      Assert.AreEqual("0.25", result);
     }
 
     [TestMethod]
-    public void Test_Add_Multiply_Decimals()
+    public void Test_Reciprocal()
     {
-        double a = 1;
-        double b = 4;
-        Logic_Interfaces.IBinaryOperation add = new Logic.Addition();
-        double intermediate_result = add.Perform_binary_calculation(a, b);
-        double c = 0.25;
-        Logic_Interfaces.IBinaryOperation multiply = new Logic.Multiplication();
-        double result = multiply.Perform_binary_calculation(intermediate_result, c);
-        Assert.AreEqual(2, result);
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("reciprocal");
+      Assert.AreEqual("0.25", result);
     }
 
+    [TestMethod]
+    public void Test_Rhs_Reciprocal()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(10.04);
+      calculator.OperationEntered("/");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("reciprocal");
+      Assert.AreEqual("0.25", result);
     }
+
+    [TestMethod]
+    public void Test_Add_Reciprocal()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.76);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("reciprocal");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("2.01", result);
+    }
+    
+    [TestMethod]
+    public void Test_Reciprocal_Sets_Rhs()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("+");
+      calculator.OperationEntered("reciprocal");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("4.25", result);
+    }
+
+    [TestMethod]
+    public void Test_Square_Root()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("square_root");
+      Assert.AreEqual("2", result);
+    }
+
+    [TestMethod]
+    public void Test_Rhs_Square_Root()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(10.04);
+      calculator.OperationEntered("/");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("squaRE_root");
+      Assert.AreEqual("2", result);
+    }
+
+    [TestMethod]
+    public void Test_Add_Square_Root()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.0);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("square_root");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("3", result);
+    }
+
+    [TestMethod]
+    public void Test_Square_Root_Sets_Rhs()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("+");
+      calculator.OperationEntered("square_root");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("6", result);
+    }
+
+    [TestMethod]
+    public void Test_Plus_Minus()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("plus_minus");
+      Assert.AreEqual("-4", result);
+    }
+
+    [TestMethod]
+    public void Test_Rhs_Plus_Minus()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(10.04);
+      calculator.OperationEntered("/");
+      calculator.NumberEntered(4.0);
+      string result = calculator.OperationEntered("plus_minus");
+      Assert.AreEqual("-4", result);
+    }
+
+    [TestMethod]
+    public void Test_Add_Plus_Minus()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.0);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("plus_minus");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("-3", result);
+    }
+
+    [TestMethod]
+    public void Test_Plus_Minus_Sets_Rhs()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(4.0);
+      calculator.OperationEntered("+");
+      calculator.OperationEntered("plus_minus");
+      string result = calculator.OperationEntered("=");
+      Assert.AreEqual("0", result);
+    }
+
+
+
+
+    [TestMethod]
+    public void Test_Reciprocal_After_Equals()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.0);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(3.0);
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      string result = calculator.OperationEntered("reciprocal");
+      Assert.AreEqual("0.0625", result);
+    }
+    
+    [TestMethod]
+    public void Test_Square_Root_After_Equals()
+    {
+      Logic.Calculator calculator = new Logic.Calculator();
+      calculator.NumberEntered(1.0);
+      calculator.OperationEntered("+");
+      calculator.NumberEntered(3.0);
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      calculator.OperationEntered("=");
+      string result = calculator.OperationEntered("square_root");
+      Assert.AreEqual("4", result);
+    }
+    
+
+
+
+
+  }
 }

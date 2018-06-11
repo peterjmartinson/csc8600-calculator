@@ -8,6 +8,6 @@ namespace Logic_Interfaces
 {
   public interface IBinaryOperation
   {
-    double Perform_binary_calculation(double lhs, double rhs);
+    double PerformBinaryCalculation(double lhs, double rhs);
   }
 }
