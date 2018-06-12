@@ -144,21 +144,26 @@ namespace Logic
 
   public class Digit
   {
-    public double Value { get; set; }
+    private double _value;
+    public double Value
+    {
+      get { return Double.IsNaN(_value) ? 0 : _value; }
+      set { _value = value; }
+    }
 
     public void Reset()
     {
-      Value = Double.NaN;
+      _value = Double.NaN;
     }
 
     public bool IsSet()
     {
-      return !Double.IsNaN(Value);
+      return !Double.IsNaN(_value);
     }
 
     public bool IsNotSet()
     {
-      return Double.IsNaN(Value);
+      return Double.IsNaN(_value);
     }
 
     public Digit()
@@ -168,7 +173,7 @@ namespace Logic
 
     public Digit(double val)
     {
-      Value = val;
+      _value = val;
     }
   }
 
