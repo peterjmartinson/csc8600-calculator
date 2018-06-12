@@ -33,8 +33,7 @@ namespace Calculator_Tests
     public void Test_Digit_Constructor()
     {
       Logic.Digit lhs = new Logic.Digit();
-      Assert.AreEqual("0", lhs.Value);
-      //Assert.IsTrue(Double.IsNaN(lhs.Value));
+      Assert.AreEqual(0, lhs.Value);
     }
 
     [TestMethod]
@@ -50,7 +49,7 @@ namespace Calculator_Tests
       Logic.Digit lhs = new Logic.Digit();
       lhs.Value = 4.1;
       lhs.Reset();
-      Assert.IsTrue(Double.IsNaN(lhs.Value));
+      Assert.AreEqual(0, lhs.Value);
     }
 
     [TestMethod]
