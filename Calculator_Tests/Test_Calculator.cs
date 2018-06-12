@@ -14,7 +14,7 @@ namespace Calculator_Tests
     }
 
     [TestMethod]
-    public void Test_Unary_operation_factory_Default()
+    public void Test_Unary_Operation_Factory_Default()
     {
       Logic.Unary_operation_factory factory = new Logic.Unary_operation_factory();
       Logic_Interfaces.IUnaryOperation pending_operation = factory.GetOperation("whatever");
@@ -22,7 +22,7 @@ namespace Calculator_Tests
     }
 
     [TestMethod]
-    public void Test_Binary_operation_factory_Default()
+    public void Test_Binary_Operation_Factory_Default()
     {
       Logic.Binary_operation_factory factory = new Logic.Binary_operation_factory();
       Logic_Interfaces.IBinaryOperation pending_operation = factory.GetOperation("whatever");
