@@ -8,7 +8,7 @@ namespace Calculator_Tests
   {
     
     [TestMethod]
-    public void Canary()
+    public void Canary_Tweets() // Tests that the tests run!
     {
       Assert.IsTrue(true);
     }
