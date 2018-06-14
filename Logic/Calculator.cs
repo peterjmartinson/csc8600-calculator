@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logic_Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Logic
 {
@@ -174,6 +175,27 @@ namespace Logic
     public Digit(double val)
     {
       _value = val;
+    }
+  }
+
+  public class KeyPress
+  {
+    private string _key;
+    private string Key
+    {
+      get { return _key; }
+      set { _key = value; }
+    }
+
+    public KeyPress(string entry)
+    {
+      Key = entry;
+    }
+
+    public bool IsValid()
+    {
+      Regex valid_keypress = new Regex(@"[0-9]+");
+      return valid_keypress.IsMatch(Key) ? true : false;
     }
   }
 
