@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Logic_Interfaces
 {
-  public interface IKeyPressHandler
+  public interface IUnaryOperationFactory
   {
-    void RouteKeyPress(string entry);
+    IUnaryOperation GetOperation(string current_operator);
   }
 }

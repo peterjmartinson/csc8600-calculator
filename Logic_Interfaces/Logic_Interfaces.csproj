@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBinaryOperation.cs" />
-    <Compile Include="IKeyPressHandler.cs" />
+    <Compile Include="IBinaryOperationFactory.cs" />
     <Compile Include="IUnaryOperation.cs" />
+    <Compile Include="IUnaryOperationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
