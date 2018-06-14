@@ -12,9 +12,11 @@ namespace Command_Line_UI
   {
 
     public Calculator calculator;
+    public HistoryTape tape;
     public Command_line_ui()
     {
       calculator = new Calculator();
+      tape = new HistoryTape();
     }
 
     public void UI()
@@ -25,6 +27,9 @@ namespace Command_Line_UI
         Console.Write("User: ");
         string input = Console.ReadLine();
         string new_display = "oops";
+        tape.AddEntry(input);
+        Console.Write(tape.GetHistory());
+
         if (double.TryParse(input, out double value))
         {
           new_display = calculator.NumberEntered(value);

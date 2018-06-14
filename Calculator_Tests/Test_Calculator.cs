@@ -14,20 +14,6 @@ namespace Calculator_Tests
     }
 
     [TestMethod]
-    public void Test_KeyPress_Valid()
-    {
-      Logic.KeyPress key = new Logic.KeyPress("33");
-      Assert.AreEqual(true, key.IsValid());
-    }
-
-    [TestMethod]
-    public void Test_KeyPress_Invalid()
-    {
-      Logic.KeyPress key = new Logic.KeyPress("wrong");
-      Assert.AreEqual(false, key.IsValid());
-    }
-
-    [TestMethod]
     public void Test_Unary_Operation_Factory_Default()
     {
       Logic.Unary_operation_factory factory = new Logic.Unary_operation_factory();
