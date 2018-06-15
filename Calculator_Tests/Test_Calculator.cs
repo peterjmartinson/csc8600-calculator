@@ -511,5 +511,21 @@ namespace Calculator_Tests
       Assert.AreEqual("1 + 2 + 3 = ", result);
     }
 
+    [TestMethod]
+    public void Test_HistoryTape_RunOn03()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("2");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("reciprocal");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("square_root");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("plus_minus");
+      history_tape.AddEntry("=");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("2 + 1/x + root + +/- = ", result);
+    }
+
   }
 }
