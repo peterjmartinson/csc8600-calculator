@@ -401,9 +401,115 @@ namespace Calculator_Tests
       Assert.AreEqual("4", result);
     }
     
+    [TestMethod]
+    public void Test_HistoryTape_GetHistory()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("2");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("2 ", result);
+    }
 
+    [TestMethod]
+    public void Test_HistoryTape_Reciprocal()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("ReCiPrOcAl");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("1/x ", result);
+    }
 
+    [TestMethod]
+    public void Test_HistoryTape_Plus_Minus()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("PlUs_MinUs");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("+/- ", result);
+    }
 
+    [TestMethod]
+    public void Test_HistoryTape_Square_Root()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("SquArE_RoOt");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("root ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_Clear()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("1");
+      history_tape.AddEntry("ClEaR");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual(" ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_Plus()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("+");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("+ ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_Minus()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("-");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("- ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_Multiply()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("*");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("* ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_Divide()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("/");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("/ ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_RunOn01()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("1");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("2");
+      history_tape.AddEntry("=");
+      history_tape.AddEntry("=");
+      history_tape.AddEntry("=");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("1 + 2 = = = ", result);
+    }
+
+    [TestMethod]
+    public void Test_HistoryTape_RunOn02()
+    {
+      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      history_tape.AddEntry("1");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("2");
+      history_tape.AddEntry("+");
+      history_tape.AddEntry("3");
+      history_tape.AddEntry("=");
+      string result = history_tape.GetHistory();
+      Assert.AreEqual("1 + 2 + 3 = ", result);
+    }
 
   }
 }

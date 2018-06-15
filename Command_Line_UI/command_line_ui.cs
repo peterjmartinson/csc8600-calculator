@@ -28,7 +28,7 @@ namespace Command_Line_UI
         string input = Console.ReadLine();
         string new_display = "oops";
         tape.AddEntry(input);
-        Console.Write(tape.GetHistory());
+        Console.Write(tape.GetHistory() + "\n");
 
         if (double.TryParse(input, out double value))
         {
