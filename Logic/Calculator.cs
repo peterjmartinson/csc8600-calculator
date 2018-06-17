@@ -16,6 +16,28 @@ namespace Logic
     private Number_entry Lhs = new Number_entry();
     private Number_entry Rhs = new Number_entry();
 
+    public double getLhs()
+    {
+      return this.Lhs.Value;
+    }
+
+    public double getRhs()
+    {
+      return this.Rhs.Value;
+    }
+
+    public string getOperator()
+    {
+      if (pending_operation != null)
+      {
+        return "set";
+      }
+      else
+      {
+        return "unset";
+      }
+    }
+
     /**
      * equals_flag & ClearAllButLhs()
      * Say user enters "1+3=====".

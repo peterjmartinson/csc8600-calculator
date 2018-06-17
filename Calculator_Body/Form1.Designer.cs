@@ -50,6 +50,9 @@
       this.Calculator_Display = new System.Windows.Forms.TextBox();
       this.History_Tape = new System.Windows.Forms.TextBox();
       this.Equals = new System.Windows.Forms.Button();
+      this.LHS_box = new System.Windows.Forms.TextBox();
+      this.RHS_box = new System.Windows.Forms.TextBox();
+      this.Operator_box = new System.Windows.Forms.TextBox();
       Divide = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
@@ -287,6 +290,7 @@
       this.Calculator_Display.ForeColor = System.Drawing.Color.Red;
       this.Calculator_Display.Location = new System.Drawing.Point(27, 63);
       this.Calculator_Display.Name = "Calculator_Display";
+      this.Calculator_Display.ReadOnly = true;
       this.Calculator_Display.Size = new System.Drawing.Size(449, 40);
       this.Calculator_Display.TabIndex = 29;
       this.Calculator_Display.Tag = "Calculator_Display";
@@ -300,6 +304,7 @@
       this.History_Tape.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
       this.History_Tape.Location = new System.Drawing.Point(27, 22);
       this.History_Tape.Name = "History_Tape";
+      this.History_Tape.ReadOnly = true;
       this.History_Tape.Size = new System.Drawing.Size(449, 31);
       this.History_Tape.TabIndex = 30;
       this.History_Tape.Tag = "History_Tape";
@@ -317,11 +322,38 @@
       this.Equals.UseVisualStyleBackColor = true;
       this.Equals.Click += new System.EventHandler(this.Equals_Click);
       // 
+      // LHS_box
+      // 
+      this.LHS_box.Location = new System.Drawing.Point(607, 113);
+      this.LHS_box.Name = "LHS_box";
+      this.LHS_box.Size = new System.Drawing.Size(199, 26);
+      this.LHS_box.TabIndex = 32;
+      this.LHS_box.Tag = "LHS_box";
+      // 
+      // RHS_box
+      // 
+      this.RHS_box.Location = new System.Drawing.Point(607, 209);
+      this.RHS_box.Name = "RHS_box";
+      this.RHS_box.Size = new System.Drawing.Size(199, 26);
+      this.RHS_box.TabIndex = 33;
+      this.RHS_box.Tag = "RHS_box";
+      // 
+      // Operator_box
+      // 
+      this.Operator_box.Location = new System.Drawing.Point(607, 161);
+      this.Operator_box.Name = "Operator_box";
+      this.Operator_box.Size = new System.Drawing.Size(199, 26);
+      this.Operator_box.TabIndex = 34;
+      this.Operator_box.Tag = "Operator_box";
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(517, 614);
+      this.ClientSize = new System.Drawing.Size(511, 614);
+      this.Controls.Add(this.Operator_box);
+      this.Controls.Add(this.RHS_box);
+      this.Controls.Add(this.LHS_box);
       this.Controls.Add(this.Equals);
       this.Controls.Add(this.History_Tape);
       this.Controls.Add(this.Calculator_Display);
@@ -373,6 +405,9 @@
     private System.Windows.Forms.TextBox Calculator_Display;
     private System.Windows.Forms.TextBox History_Tape;
     private System.Windows.Forms.Button Equals;
+    private System.Windows.Forms.TextBox LHS_box;
+    private System.Windows.Forms.TextBox RHS_box;
+    private System.Windows.Forms.TextBox Operator_box;
   }
 }
 
