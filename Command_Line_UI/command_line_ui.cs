@@ -12,11 +12,11 @@ namespace Command_Line_UI
   {
 
     public Calculator calculator;
-    public HistoryTape tape;
+    public History_tape tape;
     public Command_line_ui()
     {
       calculator = new Calculator();
-      tape = new HistoryTape();
+      tape = new History_tape();
     }
 
     public void UI()

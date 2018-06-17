@@ -13,8 +13,8 @@ namespace Logic
     private IBinaryOperation pending_operation = null;
     private IUnaryOperation unary_operation = null;
     private string bad_entry = "Illegal entry.  Must be a number or [+|-|*|/|reciprocal|square_root|plus_minus|clear]";
-    private Digit Lhs = new Digit();
-    private Digit Rhs = new Digit();
+    private Number_entry Lhs = new Number_entry();
+    private Number_entry Rhs = new Number_entry();
 
     /**
      * equals_flag & ClearAllButLhs()

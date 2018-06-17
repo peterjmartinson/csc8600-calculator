@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace Logic
 {
-  public class HistoryTape
+  public class History_tape
   {
     private string History { get; set; }
 

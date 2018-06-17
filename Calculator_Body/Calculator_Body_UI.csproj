@@ -78,5 +78,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logic\Logic.csproj">
+      <Project>{0cd3e91d-e530-42db-8317-1b3c7f8485a2}</Project>
+      <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logic_Interfaces\Logic_Interfaces.csproj">
+      <Project>{ceace4fb-7b99-4202-8daf-f44751147180}</Project>
+      <Name>Logic_Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,21 +32,21 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_Digit_Constructor()
     {
-      Logic.Digit lhs = new Logic.Digit();
+      Logic.Number_entry lhs = new Logic.Number_entry();
       Assert.AreEqual(0, lhs.Value);
     }
 
     [TestMethod]
     public void Test_Digit_Constructor_Param()
     {
-      Logic.Digit lhs = new Logic.Digit(4.1);
+      Logic.Number_entry lhs = new Logic.Number_entry(4.1);
       Assert.AreEqual(4.1, lhs.Value);
     }
 
     [TestMethod]
     public void Test_Digit_Reset()
     {
-      Logic.Digit lhs = new Logic.Digit();
+      Logic.Number_entry lhs = new Logic.Number_entry();
       lhs.Value = 4.1;
       lhs.Reset();
       Assert.AreEqual(0, lhs.Value);
@@ -55,14 +55,14 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_Digit_IsNotSet()
     {
-      Logic.Digit lhs = new Logic.Digit();
+      Logic.Number_entry lhs = new Logic.Number_entry();
       Assert.IsTrue(lhs.IsNotSet());
     }
 
     [TestMethod]
     public void Test_Digit_IsSet()
     {
-      Logic.Digit lhs = new Logic.Digit(1.0);
+      Logic.Number_entry lhs = new Logic.Number_entry(1.0);
       Assert.IsTrue(lhs.IsSet());
     }
 
@@ -404,7 +404,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_GetHistory()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("2");
       string result = history_tape.GetHistory();
       Assert.AreEqual("2 ", result);
@@ -413,7 +413,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Reciprocal()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("ReCiPrOcAl");
       string result = history_tape.GetHistory();
       Assert.AreEqual("1/x ", result);
@@ -422,7 +422,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Plus_Minus()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("PlUs_MinUs");
       string result = history_tape.GetHistory();
       Assert.AreEqual("+/- ", result);
@@ -431,7 +431,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Square_Root()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("SquArE_RoOt");
       string result = history_tape.GetHistory();
       Assert.AreEqual("root ", result);
@@ -440,7 +440,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Clear()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("1");
       history_tape.AddEntry("ClEaR");
       string result = history_tape.GetHistory();
@@ -450,7 +450,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Plus()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("+");
       string result = history_tape.GetHistory();
       Assert.AreEqual("+ ", result);
@@ -459,7 +459,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Minus()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("-");
       string result = history_tape.GetHistory();
       Assert.AreEqual("- ", result);
@@ -468,7 +468,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Multiply()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("*");
       string result = history_tape.GetHistory();
       Assert.AreEqual("* ", result);
@@ -477,7 +477,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_Divide()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("/");
       string result = history_tape.GetHistory();
       Assert.AreEqual("/ ", result);
@@ -486,7 +486,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_RunOn01()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("1");
       history_tape.AddEntry("+");
       history_tape.AddEntry("2");
@@ -500,7 +500,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_RunOn02()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("1");
       history_tape.AddEntry("+");
       history_tape.AddEntry("2");
@@ -514,7 +514,7 @@ namespace Calculator_Tests
     [TestMethod]
     public void Test_HistoryTape_RunOn03()
     {
-      Logic.HistoryTape history_tape = new Logic.HistoryTape();
+      Logic.History_tape history_tape = new Logic.History_tape();
       history_tape.AddEntry("2");
       history_tape.AddEntry("+");
       history_tape.AddEntry("reciprocal");

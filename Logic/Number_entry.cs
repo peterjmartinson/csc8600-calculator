@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-  public class Digit
+  public class Number_entry
   {
     private double _value;
     public double Value
@@ -30,12 +30,12 @@ namespace Logic
       return Double.IsNaN(_value);
     }
 
-    public Digit()
+    public Number_entry()
     {
       Reset();
     }
 
-    public Digit(double val)
+    public Number_entry(double val)
     {
       _value = val;
     }
